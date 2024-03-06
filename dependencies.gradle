@@ -33,13 +33,13 @@ ext.moduleInfo = [
 
     "APPTest"    : [
         "apidependenciesList": ["",
-                                "com.bihe0832.android:common-debug:6.9.0",
+                                "com.bihe0832.android:common-debug:6.9.4",
                                 "Application"
         ]
     ],
     "Application": [
         "apidependenciesList"    : [
-            "com.bihe0832.android:common-wrapper-min:6.9.0",
+            "com.bihe0832.android:common-wrapper-min:6.9.4",
 
         ],
         "specialdependenciesList": [
