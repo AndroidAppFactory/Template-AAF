@@ -5,13 +5,12 @@ import android.content.Context
 import android.util.Log
 import com.bihe0832.android.app.message.AAFMessageManager
 import com.bihe0832.android.app.router.RouterHelper
-import com.bihe0832.android.common.network.NetworkChangeManager
 import com.bihe0832.android.common.permission.AAFPermissionManager
 import com.bihe0832.android.framework.ZixieContext
 import com.bihe0832.android.framework.ZixieCoreInit
 import com.bihe0832.android.framework.privacy.AgreementPrivacy
 import com.bihe0832.android.lib.device.shake.ShakeManager
-import com.bihe0832.android.lib.download.wrapper.DownloadUtils
+import com.bihe0832.android.lib.download.wrapper.DownloadFileUtils
 import com.bihe0832.android.lib.log.ZLog
 import com.bihe0832.android.lib.network.MobileUtil
 import com.bihe0832.android.lib.thread.ThreadManager
@@ -56,7 +55,7 @@ object AppFactoryInit {
             RouterHelper.initRouter()
             AAFPermissionManager.initPermission()
             ThreadManager.getInstance().start {
-                DownloadUtils.init(ctx, 10, ZixieContext.isDebug())
+                DownloadFileUtils.init(ctx, 10, ZixieContext.isDebug())
             }
             AAFMessageManager.initModule(application)
             ZLog.d("Application process $processName initCore ManufacturerUtil:" + ManufacturerUtil.MODEL)
