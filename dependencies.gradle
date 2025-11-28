@@ -27,7 +27,7 @@ ext.includeALLDependOnDevelopModule = false
 /**
  * 组件所有模块的最新版本
  */
-ext.moduleVersionName = "3.6.5"
+ext.moduleVersionName = "8.0.0"
 /************************************ 组件化开发常用配置 ************************************/
 ext.moduleInfo = [
 
