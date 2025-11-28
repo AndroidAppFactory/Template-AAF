@@ -1,6 +1,5 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 // 不同类型的包，仅仅修改下面两项即可，其余内容保持一致
 project.ext.applicationID = "com.bihe0832.android.template.aaf"
@@ -44,6 +43,14 @@ android {
 
     lintOptions {
         abortOnError false
+    }
+
+    buildFeatures {
+        compose true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion project.compose_version
     }
 
     signingConfigs {
@@ -97,6 +104,12 @@ android {
             } else {
                 outputFileName = finalFileName + "_release.apk"
             }
+        }
+    }
+    
+    configurations.all {
+        resolutionStrategy {
+            force("androidx.lifecycle:lifecycle-livedata-core:2.6.0")
         }
     }
 }
