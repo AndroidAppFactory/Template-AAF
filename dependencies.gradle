@@ -27,19 +27,19 @@ ext.includeALLDependOnDevelopModule = false
 /**
  * 组件所有模块的最新版本
  */
-ext.moduleVersionName = "8.0.0"
+ext.moduleVersionName = "8.0.6"
 /************************************ 组件化开发常用配置 ************************************/
 ext.moduleInfo = [
 
     "APPTest"    : [
         "apidependenciesList": ["",
-                                "com.bihe0832.android:common-compose-debug:8.0.0",
+                                "com.bihe0832.android:common-compose-debug:8.0.6",
                                 "Application"
         ]
     ],
     "Application": [
         "apidependenciesList"    : [
-            "com.bihe0832.android:common-wrapper:8.0.0",
+            "com.bihe0832.android:common-wrapper:8.0.6",
 
         ],
         "specialdependenciesList": [
