@@ -3,6 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
 android {
+    namespace 'com.bihe0832.android.app'
     compileSdkVersion project.compileSdkVersion
     buildToolsVersion project.buildToolsVersion
 
@@ -12,6 +13,15 @@ android {
         targetSdkVersion project.targetSdkVersion
         versionName project.zixieVersionName
         versionCode project.zixieVersionCode
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = '17'
     }
 
     lintOptions {

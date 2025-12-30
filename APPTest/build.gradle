@@ -9,6 +9,7 @@ project.ext.applicationName = project.ext.applicationPrefix + "Demo"
 project.ext.test_activity_name = project.ext.applicationPrefix + "调试"
 
 android {
+    namespace project.ext.applicationID
     compileSdkVersion project.compileSdkVersion
     buildToolsVersion project.buildToolsVersion
 
@@ -43,6 +44,15 @@ android {
 
     lintOptions {
         abortOnError false
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = '17'
     }
 
     buildFeatures {
