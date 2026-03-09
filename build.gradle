@@ -1,21 +1,21 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
-apply from: rootDir.toString() + '/config.gradle'
-apply from: rootDir.toString() + '/build_module.gradle'
+
+apply from: "$rootDir/config.gradle"
 
 buildscript {
     repositories {
         maven { url "https://mirrors.tencent.com/nexus/repository/maven-public/" }
         maven { url "https://mirrors.tencent.com/repository/maven/thirdparty-snapshots/" }
         maven { url "https://repo1.maven.org/maven2" }
-        maven { url "https://s01.oss.sonatype.org/content/groups/public" }
     }
-
     dependencies {
         classpath 'com.android.tools.build:gradle:8.2.2'
         classpath "com.bihe0832.android:GradleDependenciesCheck:4.1.0"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.22"
     }
 }
+
+apply from: "$rootDir/build_module.gradle"
 
 task clean(type: Delete) {
     println("clean " + rootProject.buildDir)
@@ -27,22 +27,23 @@ allprojects {
         maven { url "https://mirrors.tencent.com/nexus/repository/maven-public/" }
         maven { url "https://mirrors.tencent.com/repository/maven/thirdparty-snapshots/" }
         maven { url "https://repo1.maven.org/maven2" }
-        maven { url "https://s01.oss.sonatype.org/content/groups/public" }
-        flatDir {
-            dirs './../libs/'
-        }
+        maven { url = uri("./../aafRepo/") }
     }
 
     afterEvaluate { Project subproject ->
         if (subproject.name == rootProject.name) {
-            rootProject.getTasks().create("showInfo") {
+            subproject.getTasks().create("showDependencyTree") {
+                group = "zixieDev"
+                description = "展示模块依赖树 (使用 -PshowTransitive=true 展示传递依赖)"
+                doLast {
+                    def showTransitive = project.hasProperty('showTransitive') && project.property('showTransitive').toString().toLowerCase() == 'true'
+                    zixieShowDependencyTree(showTransitive)
+                }
+            }
+            rootProject.getTasks().register("showInfo") {
                 group = "zixieDev"
                 doLast {
-                    System.err.println("\n\n >>>>>>>>>>>>>>>>>>>>>>>>>>>> AndroidAPPFactory <<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
-                    System.err.println("|\n|  AAF 相关信息可以参考文档：")
-                    System.err.println("|\n|    AAF文档：https://android.bihe0832.com/doc/")
-                    System.err.println("|\n|    AAF事例：https://android.bihe0832.com/samples/")
-                    System.err.println("|\n >>>>>>>>>>>>>>>>>>>>>>>>>>> AndroidAPPFactory <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
+                    zixieHelpCommand()
                 }
             }
         }
@@ -51,12 +52,6 @@ allprojects {
 
 
 subprojects {
-//    apply plugin: 'com.bihe0832.gradleDependenciesCheck'
-//
-//    GradleDependenciesCheckConfig {
-//        showResultType = 1
-//        excludePackage = "com.android.support;org.jetbrains.kotlin;android.arch.lifecycle"
-//    }
 
     afterEvaluate { Project subproject ->
         if (zixieIsDebug) println("subprojects afterEvaluate : " + subproject.name)
@@ -81,15 +76,18 @@ subprojects {
 
         subproject.getTasks().getByName('clean').doFirst {
             delete "build"
+            delete ".externalNativeBuild"
         }
 
-        if (!subproject.name.startsWith("Pub") || subproject.name != "APPTest") {
+        if (subproject.name.startsWith("Lib") || subproject.name.startsWith("Common") || subproject.name.startsWith("Framework")) {
+
 //            subproject.getTasks().create("copyAAR", Copy.class) {
 //                group = "zixieDev"
 //                from 'build/outputs/aar/' + module.name + '-release.aar'
 //                into "./../libs/"
 //            }
-//
+
+//            subproject.getTasks().getByName('publish').dependsOn("assembleRelease")
 //            subproject.getTasks().getByName('copyAAR').dependsOn("assembleRelease")
         }
     }
